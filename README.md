@@ -54,7 +54,7 @@ Posteriormente se implementan dos representaciones en MATLAB/Simulink/Simscape (
 
 > **Alcance:** la práctica se desarrolla exclusivamente mediante experimentación *in silico*. La estrategia de control tiene propósitos académicos y de simulación y **no constituye una estrategia terapéutica** para el tratamiento de la atrofia muscular.
 
-**Palabras clave:** sistema musculoesquelético; analogía fuerza–voltaje; atrofia muscular; superposición; controlador PID; MATLAB; Simulink; Simscape Electrical; Python; simulación *in silico*.
+**Palabras clave:** sistema musculoesquelético; analogía fuerza–voltaje; atrofia muscular; superposición; simulación *in silico*.
 
 [Volver al contenido](#contenido)
 
