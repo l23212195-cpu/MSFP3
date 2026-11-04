@@ -136,15 +136,13 @@ Los componentes mecánicos conectados en paralelo se convierten en elementos el�
 
 ### Circuito eléctrico equivalente
 
-Del análisis de la transformación (ver [`Análisis_matemático_P3.pdf`](Análisis_matemático_P3.pdf)):
+Del análisis de la transformación:
 
 - La fuente $F_0(t)$ y el resistor $R$ (mecánicamente en paralelo) quedan **en serie**.
 - Esa rama en serie queda **en paralelo** con $C_s$, porque comparten la misma fuerza (voltaje) y sus desplazamientos se suman: $x(t)=x_1(t)+x_2(t)$.
 - El conjunto anterior queda **en serie** con $C_p$ y con la fuente $F(t)$, ya que ambas ramas comparten el mismo desplazamiento total $x(t)$.
 
 La salida $F_s(t)$ corresponde al voltaje sobre $C_p$ (nodo entre la rama paralela y $C_p$); el desplazamiento se obtiene como carga: $x(t)=C_p\,F_s(t)$.
-
-![Circuito equivalente implementado en Simscape Electrical (caso control)](capturas/Simulink_Sistema_Control.png)
 
 ### Parámetros del circuito equivalente
 
