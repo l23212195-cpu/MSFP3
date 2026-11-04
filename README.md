@@ -1,4 +1,4 @@
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=l23212195-cpu/MSFP3)
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=USUARIO_GITHUB/MSFP3)
 
 # Práctica 5.5 — Modelado y control del sistema musculoesquelético
 
@@ -10,7 +10,7 @@ Repositorio académico de la asignatura **Modelado de Sistemas Fisiológicos**, 
 **Institución:** Tecnológico Nacional de México / Instituto Tecnológico de Tijuana  
 **Asignatura:** Modelado de Sistemas Fisiológicos  
 **Programa:** Ingeniería Biomédica  
-**Estudiante:** Garcia Grijalava Armando · 23212195 · L23212195@tijuana.tecnm.mx
+**Estudiante:** Nombre completo · 23212195 · correo@tijuana.tecnm.mx
 
 **Repositorio de la asignatura:** https://github.com/DrPaulValle/MSF-IBF1020  
 **Sede:** Blvd. Alberto Limón Padilla s/n, Tijuana, C. P. 22454, B. C., México.
@@ -31,13 +31,15 @@ Repositorio académico de la asignatura **Modelado de Sistemas Fisiológicos**, 
 9. [Control en lazo cerrado y sintonización PID](#pid)
 10. [Reproducción en Python](#python)
 11. [Resultados y verificación cruzada](#resultados)
-12. [Diagrama biológico](#biologico)
-13. [Flujo de trabajo](#flujo)
-14. [Actividades del estudiante](#actividades)
-15. [Estructura del repositorio](#estructura)
-16. [Requisitos](#requisitos)
-17. [Reproducibilidad y entregables](#reproducibilidad)
-18. [Referencias](#referencias)
+12. [Discusión](#discusion)
+13. [Conclusiones](#conclusiones)
+14. [Diagrama biológico](#biologico)
+15. [Flujo de trabajo](#flujo)
+16. [Actividades del estudiante](#actividades)
+17. [Estructura del repositorio](#estructura)
+18. [Requisitos](#requisitos)
+19. [Reproducibilidad y entregables](#reproducibilidad)
+20. [Referencias](#referencias)
 
 ---
 
@@ -48,7 +50,7 @@ Los modelos mecánicos permiten representar de forma simplificada las propiedade
 
 El modelo mecánico se convierte a un circuito eléctrico equivalente con la analogía fuerza–voltaje. Como el circuito contiene dos fuentes de voltaje, $F(t)$ y $F_0(t)=\alpha F(t)$, se aplica el **principio de superposición** para obtener la función de transferencia entre la fuerza aplicada y la variable de salida. Se estudian el error en estado estacionario y la estabilidad, y se comparan dos conjuntos de parámetros: el individuo sano (**control**, $R=100\,\Omega$) y un caso simulado de **atrofia muscular** (**caso**, $R=10\,\mathrm{k}\Omega$), donde únicamente se incrementa la componente viscosa.
 
-Posteriormente se implementan tres representaciones en MATLAB/Simulink/Simscape, se obtiene la respuesta al impulso en lazo abierto, se incorpora un **controlador PID** al caso usando como referencia la respuesta del control y se verifican los resultados con un cuaderno de MATLAB y con código en Python.
+Posteriormente se implementan dos representaciones en MATLAB/Simulink/Simscape (función de transferencia y circuito equivalente), se obtiene la respuesta al impulso en lazo abierto, se incorpora un **controlador PID** al caso usando como referencia la respuesta del control y se verifican los resultados con un cuaderno de MATLAB y con código en Python.
 
 > **Alcance:** la práctica se desarrolla exclusivamente mediante experimentación *in silico*. La estrategia de control tiene propósitos académicos y de simulación y **no constituye una estrategia terapéutica** para el tratamiento de la atrofia muscular.
 
@@ -75,7 +77,7 @@ Analizar un modelo mecánico simplificado del sistema musculoesquelético, const
 - Convertir el modelo mecánico en un circuito eléctrico equivalente con la analogía fuerza–voltaje.
 - Formular las ecuaciones del sistema y obtener la función de transferencia mediante superposición y transformada de Laplace.
 - Calcular el error en estado estacionario y analizar la estabilidad mediante los polos de control y caso.
-- Implementar el modelo en Simulink (ecuaciones y función de transferencia) y en Simscape Electrical (circuito).
+- Implementar el modelo en Simulink mediante su función de transferencia y mediante el circuito equivalente en Simscape Electrical.
 - Obtener la respuesta al impulso unitario de control y caso en $t\in[0,10]\,\mathrm{s}$.
 - Sintonizar un controlador PID con la herramienta *Tune* y analizar la respuesta en lazo cerrado.
 - Reproducir los resultados en un cuaderno de MATLAB y en Python y realizar la verificación cruzada.
@@ -112,12 +114,12 @@ El enfoque integra **Ingeniería de Control, Electrónica Analógica, Ciencias d
 | $F(t)$ | Fuerza transmitida por el sistema tras considerar sus propiedades mecánicas | Fuerza generada |
 | $R$ | Amortiguador viscoso | Viscosidad inherente al tejido |
 | $C_s$ | Compliancia del elemento elástico en serie | Tendones |
-| $C_p$ | Compliancia del elemento elástico en paralelo | Sarcolema y estructuras musculares pasivas |
+| $C_p$ | Compliancia del elemento elástico en paralelo | Sarcolema, estructuras musculares pasivas y tejido adiposo |
 | $x(t)$ | Desplazamiento total | Desplazamiento del sistema |
 | $x_1(t)$ | Desplazamiento de $C_s$ | Deformación del elemento en serie |
 | $x(t)-x_1(t)$ | Deformación del amortiguador | Velocidad relativa: $\frac{d}{dt}[x(t)-x_1(t)]$ |
 
-![Modelo mecánico simplificado (Figura 5.3 de la guía)](figuras/modelo_mecanico.png)
+*El modelo mecánico (Figura 5.3 de la guía) se muestra en la esquina superior izquierda del [diagrama biológico](#biologico) y de los subsistemas de Simulink.*
 
 ### Analogía fuerza–voltaje
 
@@ -142,7 +144,7 @@ Del análisis de la transformación (ver [`Análisis_matemático_P3.pdf`](Análi
 
 La salida $F_s(t)$ corresponde al voltaje sobre $C_p$ (nodo entre la rama paralela y $C_p$); el desplazamiento se obtiene como carga: $x(t)=C_p\,F_s(t)$.
 
-![Transformación del sistema mecánico a eléctrico](figuras/circuito_equivalente.png)
+![Circuito equivalente implementado en Simscape Electrical (caso control)](capturas/Simulink_Sistema_Control.png)
 
 ### Parámetros del circuito equivalente
 
@@ -251,7 +253,24 @@ $$
 
 El **área** del término exponencial es la misma en ambos casos; el incremento de $R$ únicamente lo hace más lento y de menor amplitud.
 
-> **Nota numérica:** el término $D\,\delta(t)$ no se representa por completo con un impulso discretizado. En simulación el impulso se aproxima con un pulso estrecho de área unitaria y, en algunas herramientas (por ejemplo, funciones de respuesta al impulso de Python), el término instantáneo puede omitirse. Esto debe considerarse al comparar plataformas.
+> **Nota numérica:** el término $D\,\delta(t)$ no se representa por completo con un impulso discretizado y, en algunas herramientas (por ejemplo, funciones de respuesta al impulso de Python), el término instantáneo puede omitirse. Por ello, en las simulaciones de esta práctica la entrada tipo impulso se implementa como un **pulso rectangular de área unitaria** (ver [Señal de entrada](#senales)), cuya respuesta se describe a continuación.
+
+#### Respuesta al pulso rectangular utilizado en la simulación
+
+Para un pulso de amplitud $1\,\mathrm{V}$ que se activa en $t=1\,\mathrm{s}$ y se desactiva en $t=2\,\mathrm{s}$, a partir de la respuesta al escalón
+
+$$
+y_{esc}(t)=(1-\alpha)-\left[(1-\alpha)-D\right]e^{-t/\tau},
+$$
+
+la respuesta es $y(t)=y_{esc}(t-1)$ para $1\le t<2$ y $y(t)=y_{esc}(t-1)-y_{esc}(t-2)$ para $t\ge2$. Los valores característicos son:
+
+| Característica | Control ($\tau=0.011\,\mathrm{s}$) | Caso ($\tau=1.1\,\mathrm{s}$) |
+|---|---:|---:|
+| Valor inicial en $t=1^+$ (salto $D$) | $\approx0.091\,\mathrm{V}$ | $\approx0.091\,\mathrm{V}$ |
+| Valor en $t=2^-$ | $\approx0.75\,\mathrm{V}$ (meseta) | $\approx0.484\,\mathrm{V}$ |
+| Valor en $t=2^+$ (caída $D$) | $\approx0.659\,\mathrm{V}$ | $\approx0.394\,\mathrm{V}$ |
+| Decaimiento posterior | Casi inmediato | Exponencial con $\tau=1.1\,\mathrm{s}$ |
 
 [Volver al contenido](#contenido)
 
@@ -321,14 +340,25 @@ Este código es ilustrativo y no sustituye los archivos del estudiante.
 <a id="senales"></a>
 ## Señal de entrada y condiciones de simulación
 
+La entrada tipo impulso se genera en Simulink con el bloque *Pulse Generator*, nombrado `F(t)`, configurado como un pulso rectangular de **área unitaria** ($1\,\mathrm{V}\times1\,\mathrm{s}=1\,\mathrm{V\cdot s}$):
+
+| Parámetro del bloque | Valor |
+|---|---|
+| Pulse type | Time based |
+| Time (t) | Use simulation time |
+| Amplitude | $1\,\mathrm{V}$ |
+| Period | $10\,\mathrm{s}$ |
+| Pulse width | $10\,\%$ del periodo ($=1\,\mathrm{s}$) |
+| Phase delay | $1\,\mathrm{s}$ |
+
+Con estos valores el pulso está activo en $1\,\mathrm{s}\le t<2\,\mathrm{s}$; el siguiente comenzaría en $t=11\,\mathrm{s}$, fuera del intervalo de simulación.
+
 | Elemento | Definición |
 |---|---|
-| Entrada | Impulso unitario (aproximado por un pulso estrecho de área unitaria en las simulaciones numéricas) |
 | Intervalo | $t\in[0,10]\,\mathrm{s}$ |
-| Amplitud de $F(t)$ en el circuito | $1\,\mathrm{V}$ |
 | Condiciones iniciales | Nulas |
-
-[Definir aquí el ancho del pulso, el paso máximo y el solver empleados en Simulink.]
+| Solver | `ode15s` (paso variable) |
+| Tiempo de parada | $10\,\mathrm{s}$ |
 
 La **misma entrada** y las mismas condiciones se aplican a control, caso y sistema controlado, y en todas las representaciones.
 
@@ -339,23 +369,35 @@ La **misma entrada** y las mismas condiciones se aplican a control, caso y siste
 <a id="matlab"></a>
 ## Implementación en MATLAB, Simulink y Simscape
 
-Se construyen tres representaciones para control y caso:
+El archivo [`SistemaP3.slx`](SistemaP3.slx) contiene dos representaciones equivalentes para control y caso:
 
-| Implementación | Descripción | Aspecto por verificar |
+| Implementación | Descripción | Salida en el modelo |
 |---|---|---|
-| Ecuaciones del sistema, Simulink | Bloques que implementan las ecuaciones de la sección de formulación matemática | Consistencia con las relaciones constitutivas |
-| Función de transferencia, Simulink | Bloque *Transfer Fcn* con $G(s)$ | Respuesta entrada–salida |
-| Circuito equivalente, Simscape Electrical | Fuentes de voltaje, $R$, $C_s$ y $C_p$ con la topología obtenida | Concordancia con las representaciones matemáticas |
+| Función de transferencia, Simulink | Bloque *Transfer Fcn* con $G(s)=\dfrac{RC_s s+1-\alpha}{R(C_p+C_s)s+1}$ y los parámetros de cada caso | `F(t): Control FT`, `F(t): Caso FT` |
+| Circuito equivalente, Simscape Electrical | Dos fuentes de voltaje controladas ($F(t)$ y $\alpha F(t)$, con una ganancia $\alpha=0.25$), resistor $R$, capacitores $C_s$ y $C_p$, sensor de voltaje sobre $C_p$, referencia eléctrica y bloque *Solver Configuration* | `F(t): Control CE`, `F(t): Caso CE` |
 
-En Simscape la salida $F_s(t)$ se mide como el voltaje sobre $C_p$; si se desea el desplazamiento se multiplica por $C_p$ (o se integra la corriente). La fuente $F_0(t)=\alpha F(t)$ puede implementarse como fuente de voltaje controlada con ganancia $\alpha$.
+La salida $F_s(t)$ del circuito se mide como el voltaje sobre $C_p$; si se desea el desplazamiento se multiplica por $C_p$.
+
+### Estructura del modelo `SistemaP3.slx`
+
+- **Nivel superior:** bloque *Pulse Generator* `F(t)` (ver [Señal de entrada](#senales)), los subsistemas `Sistema Control` y `Sistema Caso`, el registro de señales hacia el *Workspace* (`F`, `Fsx`, `Fsy`, `PID`) y los osciloscopios `Scope: Control` y `Scope: Caso`.
+- **`Sistema Control`:** circuito equivalente (`Control CE`) y función de transferencia (`Control FT`) con $R=100\,\Omega$.
+- **`Sistema Caso`:** circuito equivalente (`Caso CE`) y función de transferencia (`Caso FT`) con $R=10\,\mathrm{k}\Omega$, más el **lazo cerrado**: la salida del control (referencia) menos la salida del caso con controlador pasa por el bloque `PI(s)` y por la función de transferencia del caso (`Tratamiento`), con retroalimentación negativa unitaria; su salida es `PID(t): Caso`. El lazo cerrado se construye sobre la función de transferencia del caso, no sobre el circuito.
+
+![Modelo SistemaP3 en Simulink](capturas/Simulink_SistemaP3.png)
+
+![Subsistema Control: circuito equivalente y función de transferencia](capturas/Simulink_Sistema_Control.png)
+
+![Subsistema Caso: circuito equivalente, función de transferencia y lazo cerrado con PI](capturas/Simulink_Sistema_Caso.png)
 
 ### Ejecución desde el cuaderno MATLAB
 
-El cuaderno ejecuta el modelo de Simulink y almacena en el *Workspace* las respuestas de:
+El cuaderno [`Garcia23212195(P3).mlx`](Garcia23212195%28P3%29.mlx) ejecuta el modelo de Simulink y almacena en el *Workspace* las señales:
 
-1. **Control** (individuo sano).
-2. **Caso en lazo abierto**.
-3. **Caso con controlador PID**.
+1. `F`: entrada (pulso).
+2. `Fsx`: **control** (individuo sano).
+3. `Fsy`: **caso en lazo abierto**.
+4. `PID`: **caso con controlador** (tratamiento).
 
 Una función del cuaderno debe: (a) graficar las respuestas, (b) identificar variables y unidades, (c) comparar control, caso y sistema controlado, y (d) guardar las figuras en PDF.
 
@@ -384,15 +426,43 @@ $$
 
 ### 2. Sintonización
 
-Se utiliza la herramienta **Tune** del bloque *PID Controller* para obtener $k_P$, $k_I$ y $k_D$ buscando una respuesta **estable** y una **reducción del error** entre la salida del caso y la respuesta de referencia. La guía no establece criterios numéricos como tiempo de establecimiento o sobreimpulso; se recomienda reportar de forma explícita un indicador del error (por ejemplo, el error máximo o la integral del error cuadrático) para respaldar la mejora.
+Se utiliza la herramienta **Tune** del bloque *PID Controller* (PID 1dof, método *Transfer Function Based*, PID Tuner App) para obtener $k_P$, $k_I$ y $k_D$ buscando una respuesta **estable** y una **reducción del error** entre la salida del caso y la respuesta de referencia. La guía no establece criterios numéricos como tiempo de establecimiento o sobreimpulso.
 
-| Ganancia | Valor |
-|---|---|
-| $k_P$ | [valor] |
-| $k_I$ | [valor] |
-| $k_D$ | [valor] |
+**Configuración del bloque:** controlador **PI**, forma **paralela**, tiempo continuo, fuente de parámetros interna y detección de cruces por cero habilitada. En *Tune* se trabajó en el dominio del tiempo con *Response time* $\approx3.065\times10^{-4}\,\mathrm{s}$ y *Transient behavior* $=0.9$.
 
-![Configuración de la sintonización con Tune](figuras/tune_pid.png)
+| Ganancia | Valor final (bloque en Simulink) | Unidades |
+|---|---:|---|
+| $k_P$ | $0.0126431794597294$ ($\approx0.012643$) | adimensional (V/V) |
+| $k_I$ | $71\,777.641465832$ ($\approx71\,777.6415$) | $\mathrm{s^{-1}}$ |
+| $k_D$ | $0$ | s |
+
+Como $k_D=0$, el controlador es de tipo **PI**:
+
+$$
+K(s)=k_P+\frac{k_I}{s}=\frac{0.012643\,s+71\,777.6415}{s}.
+$$
+
+![Parámetros del bloque PID Controller](capturas/PID_Controller_bloque.png)
+
+![Sintonización con PID Tuner: seguimiento de la referencia](capturas/Tune_PI.png)
+
+**Desempeño reportado por PID Tuner** (respuesta al escalón de la referencia, con las ganancias sintonizadas):
+
+| Indicador | Valor |
+|---|---:|
+| Tiempo de subida | $0.000336\,\mathrm{s}$ |
+| Tiempo de establecimiento | $0.000593\,\mathrm{s}$ |
+| Sobreimpulso | $0\,\%$ |
+| Margen de fase | $90^\circ$ @ $6.53\times10^{3}\,\mathrm{rad/s}$ |
+| Estabilidad de lazo cerrado | Estable |
+
+**Observaciones analíticas** (calculadas con $G_{caso}(s)$ y $K(s)$; verificar con `feedback` y `pole`):
+
+- La ecuación característica de lazo cerrado es $(1.1+0.1k_P)s^2+(1+0.75k_P+0.1k_I)s+0.75k_I=0$, es decir, $\approx1.1013\,s^2+7178.8\,s+53\,833.2=0$.
+- Sus polos son reales y negativos, $s\approx-6511.2$ y $s\approx-7.51$, por lo que el lazo cerrado es **estable**.
+- El polo en $s\approx-7.51$ queda prácticamente sobre el cero de la planta del caso ($z=-7.5$), por lo que casi se cancelan en la respuesta a la referencia; la dinámica dominante es la del polo rápido ($\approx0.15\,\mathrm{ms}$).
+- Por la acción integral, la ganancia en estado estacionario de lazo cerrado es $T(0)=1$.
+- La constante de tiempo integral es $T_i=k_P/k_I\approx1.76\times10^{-7}\,\mathrm{s}$, muy pequeña: el controlador es muy agresivo y conviene revisar la señal de control.
 
 [Volver al contenido](#contenido)
 
@@ -401,16 +471,27 @@ Se utiliza la herramienta **Tune** del bloque *PID Controller* para obtener $k_P
 <a id="python"></a>
 ## Reproducción en Python
 
-El código en Visual Studio Code debe:
+El código en Visual Studio Code (biblioteca `python-control`, importada como `ctrl`):
 
-1. Definir las funciones de transferencia de control y caso con los parámetros de la tabla.
-2. Calcular polos y ceros.
-3. Obtener la respuesta al impulso con las mismas condiciones usadas en MATLAB/Simulink.
-4. Incorporar las ganancias $k_P$, $k_I$ y $k_D$ obtenidas con *Tune*.
-5. Construir el sistema en lazo cerrado del caso con retroalimentación respecto a la referencia del control.
-6. Generar y guardar las figuras para compararlas con las de MATLAB/Simulink.
+1. Define las funciones de transferencia de control y caso con los parámetros de la tabla.
+2. Incorpora las ganancias $k_P$, $k_I$ y $k_D$ finales obtenidas con *Tune*.
+3. Construye el sistema en lazo cerrado del caso con retroalimentación respecto a la referencia del control.
+4. Simula con el mismo pulso rectangular de la sección [Señal de entrada](#senales) (amplitud $1\,\mathrm{V}$, inicio en $1\,\mathrm{s}$, duración $1\,\mathrm{s}$).
+5. Genera y guarda la figura para compararla con la de MATLAB/Simulink.
 
-Las bibliotecas de Python deben verificarse en los módulos importados por el archivo `.py` del estudiante. Debe tenerse en cuenta el comentario sobre el término instantáneo $D\,\delta(t)$ al comparar respuestas.
+```python
+R, Cs, Cp, a = 100, 10E-6, 100E-6, 0.25
+Rcaso = 10E3
+sys     = ctrl.tf([R*Cs, 1-a],     [R*(Cp+Cs), 1])        # control
+sysCaso = ctrl.tf([Rcaso*Cs, 1-a], [Rcaso*(Cp+Cs), 1])    # caso
+
+kP, kI, kD = 0.0126431794597294, 71777.641465832, 0       # ganancias finales (Simulink)
+PID = ctrl.tf([kD, kP, kI], [1, 0])
+```
+
+Archivo del estudiante: [`Garcia23212195(P3).py`](Garcia23212195%28P3%29.py). Figura de resultados: [`Señal_Python.pdf`](Se%C3%B1al_Python.pdf).
+
+> **Corrección durante la verificación:** en una primera versión, el numerador del caso utilizaba $R\,C_s$ con $R=100\,\Omega$ en lugar de $R_{caso}C_s$, y el controlador empleaba ganancias de una sintonización previa ($k_P=0.013239$, $k_I=68547.1067$). Esto eliminaba el término de transmisión directa en el caso y producía una respuesta distinta a la de MATLAB (arranque en $\approx0\,\mathrm{V}$ y pico de $\approx0.45\,\mathrm{V}$ en lugar de $\approx0.09\,\mathrm{V}$ y $\approx0.48\,\mathrm{V}$). Ambos puntos se corrigieron en la versión final.
 
 [Volver al contenido](#contenido)
 
@@ -423,43 +504,73 @@ Convención de figuras sugerida: control (referencia), caso en lazo abierto y ca
 
 ### Respuesta en lazo abierto
 
-[Insertar figura y describir la comparación entre control y caso: amplitud, rapidez y efecto del incremento de $R$.]
+La figura generada en MATLAB ([`Señal_matlab.pdf`](Se%C3%B1al_matlab.pdf)) muestra, en un mismo gráfico, la entrada $F(t)$ (pulso de $1\,\mathrm{V}$ entre $1$ y $2\,\mathrm{s}$) y las salidas $F_s(t)$ del **control**, del **caso** en lazo abierto y del caso con PID (**tratamiento**), en $t\in[0,10]\,\mathrm{s}$.
 
-![Respuesta al impulso: control vs. caso](figuras/lazo_abierto.png)
+**Lazo abierto (control vs. caso):**
 
-### Respuesta en lazo cerrado
+- El **control** responde de forma casi instantánea y alcanza una meseta de $\approx0.75\,\mathrm{V}$ ($=1-\alpha$) durante el pulso; al terminar el pulso regresa prácticamente a cero.
+- El **caso** responde lentamente: partiendo de $\approx0.09\,\mathrm{V}$ solo alcanza $\approx0.48\,\mathrm{V}$ al final del pulso y después decae de forma exponencial, tardando varios segundos en volver a cero.
+- Ambas respuestas muestran un salto instantáneo al inicio y al final del pulso, debido a la transmisión directa $D=C_s/(C_p+C_s)\approx0.091$ de la función de transferencia.
+- Estos valores coinciden con la predicción analítica de la sección de formulación matemática.
 
-Comparación de $x_{control}(t)$, $x_{caso}(t)$ y $x_{PID}(t)$.
+**Lazo cerrado (tratamiento):**
 
-![Lazo cerrado](figuras/lazo_cerrado.png)
+- La respuesta del caso con el controlador PI ($k_D=0$) se superpone con la del control en la escala de la figura: el caso controlado alcanza la meseta de $\approx0.75\,\mathrm{V}$ y decae igual que el control, eliminando la lentitud y la menor amplitud del caso en lazo abierto.
 
-[Analizar el efecto del controlador sobre amplitud, velocidad de respuesta, amortiguamiento y diferencia entre caso y control.]
+**Simulink (osciloscopios):**
+
+- En `Scope: Control`, las trazas del circuito equivalente (CE) y de la función de transferencia (FT) se superponen: ambas alcanzan la meseta de $0.75\,\mathrm{V}$ entre $1$ y $2\,\mathrm{s}$.
+- En `Scope: Caso`, las trazas CE y FT también se superponen entre sí (pico de $\approx0.48\,\mathrm{V}$ y decaimiento exponencial), y la salida con PI (`PID(t): Caso`) se superpone con la referencia del control.
+
+![Scope: Control](capturas/Scope_Control.png)
+
+![Scope: Caso](capturas/Scope_Caso.png)
+
+**Python:** la figura [`Señal_Python.pdf`](Se%C3%B1al_Python.pdf) reproduce la entrada, el control, el caso y el tratamiento, con las mismas funciones de transferencia y ganancias que el modelo de Simulink; sus curvas coinciden con las de MATLAB (control y tratamiento con meseta de $0.75\,\mathrm{V}$; caso con arranque en $\approx0.09\,\mathrm{V}$, pico de $\approx0.48\,\mathrm{V}$ y caída de $\approx0.09\,\mathrm{V}$ en $t=2\,\mathrm{s}$).
+
+**Indicadores de error** (calculados con las funciones de transferencia en Python, `scipy.signal.lsim`, paso de $10\,\mu\mathrm{s}$, error $e(t)=x_{control}(t)-x(t)$ sobre $t\in[0,10]\,\mathrm{s}$):
+
+| Indicador | Caso en lazo abierto | Caso con PI (tratamiento) |
+|---|---:|---:|
+| Error máximo $\max\lvert e\rvert$ | $0.623\,\mathrm{V}$ | $0.088\,\mathrm{V}$ |
+| Error RMS | $0.166\,\mathrm{V}$ | $4.8\times10^{-4}\,\mathrm{V}$ |
+| Integral del error cuadrático | $0.275\,\mathrm{V^2 s}$ | $2.3\times10^{-6}\,\mathrm{V^2 s}$ |
+
+El error máximo con PI ocurre en los instantes de conmutación del pulso ($t=1\,\mathrm{s}$ y $t=2\,\mathrm{s}$), donde la referencia cambia de forma instantánea; fuera de ellos el error es prácticamente nulo. Estos valores conviene reproducirlos con las señales exportadas de MATLAB.
 
 ### Verificación cruzada
 
 | Implementación | Archivo / figura | Observaciones |
 |---|---|---|
-| Ecuaciones en Simulink | [archivo] | [comentario] |
-| Función de transferencia en Simulink | [archivo] | [comentario] |
-| Circuito en Simscape Electrical | [archivo] | [comentario] |
-| Cuaderno MATLAB | [archivo] | [comentario] |
-| Python | [archivo] | [comentario] |
+| Función de transferencia en Simulink | [`SistemaP3.slx`](SistemaP3.slx) (salidas `FT`) | Coincide con el circuito en `Scope: Control` y `Scope: Caso` |
+| Circuito en Simscape Electrical | [`SistemaP3.slx`](SistemaP3.slx) (salidas `CE`) | Coincide con la función de transferencia |
+| Cuaderno MATLAB | [`Garcia23212195(P3).mlx`](Garcia23212195%28P3%29.mlx), [`.pdf`](Garcia23212195%28P3%29.pdf) | Figura [`Señal_matlab.pdf`](Se%C3%B1al_matlab.pdf); coincide con la predicción analítica |
+| Python | [`Garcia23212195(P3).py`](Garcia23212195%28P3%29.py) | Figura [`Señal_Python.pdf`](Se%C3%B1al_Python.pdf); coincide con MATLAB tras corregir el numerador del caso y las ganancias |
 
-| Comparación | Diferencia máxima | Posible causa |
+| Comparación | Diferencia máxima (estimada de las figuras) | Posible causa |
 |---|---|---|
-| Ecuaciones vs. función de transferencia | [valor] | [comentario] |
-| Simulink vs. Simscape | [valor] | [comentario] |
-| MATLAB vs. Python | [valor] | [comentario] |
+| Función de transferencia vs. circuito (Simulink) | No apreciable (trazas superpuestas) | — |
+| MATLAB/Simulink vs. Python (caso) | No apreciable (tras la corrección) | Versión inicial: numerador del caso con $R$ en lugar de $R_{caso}$ (diferencia máxima $\approx0.09\,\mathrm{V}$ en $t=1\,\mathrm{s}$) |
+| MATLAB/Simulink vs. Python (control y tratamiento) | No apreciable en la escala de la figura | — |
 
-### Aspectos para discutir
+> Las diferencias máximas se estimaron visualmente a partir de las figuras; conviene calcularlas numéricamente (por ejemplo, con `max(abs(...))`) sobre las señales exportadas.
 
-- Coincidencia entre las representaciones por ecuaciones, función de transferencia y circuito.
-- Efecto del incremento de $R$ sobre el polo, la constante de tiempo y la respuesta.
-- Efecto del PID sobre el seguimiento de la referencia y el error.
-- Consistencia entre MATLAB y Python, y tratamiento del impulso.
-- Limitaciones del modelo mecánico de parámetros concentrados y de la analogía.
+<a id="discusion"></a>
+## Discusión
 
-**Resultados del estudiante:** agregar las ganancias sintonizadas, las figuras, las capturas y un comentario interpretativo propio. No se incluyen ganancias ni resultados de simulación ficticios.
+- **Efecto de $R$.** El incremento de $R$ de $100\,\Omega$ a $10\,\mathrm{k}\Omega$ desplaza el polo de $-90.9$ a $-0.909\,\mathrm{rad/s}$ y aumenta la constante de tiempo de $0.011$ a $1.1\,\mathrm{s}$. En el modelo, la atrofia simulada se manifiesta como una respuesta mucho más lenta y de menor amplitud ante la misma entrada, sin modificar la ganancia final ($1-\alpha$).
+- **Transmisión directa.** Los saltos instantáneos observados en ambos casos se explican por el término $D=C_s/(C_p+C_s)$, independiente de $R$.
+- **Efecto del controlador.** El PI sintonizado compensa la dinámica lenta del caso: la salida del tratamiento sigue a la referencia del control durante el pulso y su decaimiento. Con $k_D=0$ la acción corresponde a un controlador PI, y la ganancia integral elevada implica un controlador agresivo cuya señal de control conviene revisar.
+- **Verificación cruzada.** El circuito equivalente de Simscape y la función de transferencia de Simulink producen la misma respuesta, lo que valida la analogía fuerza–voltaje y la superposición aplicada. La verificación con Python permitió detectar y corregir un error en el numerador del caso, tras lo cual coincide con MATLAB/Simulink.
+- **Limitaciones.** El modelo es lineal y de parámetros concentrados, con un único parámetro ($R$) para representar la atrofia; la analogía eléctrica conserva la estructura matemática pero no sustituye una validación fisiológica.
+
+<a id="conclusiones"></a>
+## Conclusiones
+
+- Se obtuvo la función de transferencia del modelo mecánico mediante la analogía fuerza–voltaje y el principio de superposición; es de primer orden, con un polo real negativo, y por tanto estable.
+- El error en estado estacionario no depende de $R$ ($e_{ss}=\alpha$ para un escalón unitario), por lo que control y caso difieren únicamente en el transitorio.
+- La atrofia simulada (mayor $R$) ralentiza y atenúa la respuesta; un controlador PI sintonizado con *Tune* permitió que el caso reprodujera la respuesta del individuo sano en la simulación.
+- Las estrategias de control aquí desarrolladas tienen fines exclusivamente académicos y no constituyen una propuesta terapéutica.
 
 [Volver al contenido](#contenido)
 
@@ -470,18 +581,20 @@ Comparación de $x_{control}(t)$, $x_{caso}(t)$ y $x_{PID}(t)$.
 
 Diagrama elaborado en BioRender (o herramienta equivalente) que relaciona los elementos del modelo con las estructuras musculoesqueléticas. Debe identificar, como mínimo: elemento contráctil muscular, estructuras elásticas musculares, tendón, desplazamiento, fuerza generada y elementos de comportamiento viscoso y elástico.
 
-![Diagrama biológico](figuras/diagrama_biologico.png)
+![Diagrama de modelado y control del sistema musculoesquelético (BioRender)](Diagrama%20de%20modelado%20y%20control%20del%20sistema%20musculoesquel%C3%A9tico.png)
+
+*Figura elaborada con BioRender. Relaciona el modelo mecánico (esquina superior izquierda) con las estructuras musculoesqueléticas que representa cada elemento.*
 
 | Estructura biológica | Elemento mecánico | Equivalente eléctrico |
 |---|---|---|
-| Elemento contráctil | $F_0(t)$ | Fuente de voltaje $\alpha F(t)$ |
-| Viscosidad del tejido | Amortiguador $R$ | Resistor $R$ |
-| Tendón | Elemento en serie $C_s$ | Capacitor $C_s$ |
-| Sarcolema / estructuras pasivas | Elemento en paralelo $C_p$ | Capacitor $C_p$ |
-| Fuerza generada | $F(t)$ | Voltaje $V(t)$ |
-| Desplazamiento | $x(t)$ | Carga $q(t)$ |
+| Sarcómeros (elemento contráctil) | Generador de fuerza activo $F_0(t)=\alpha F(t)$ | Fuente de voltaje $\alpha F(t)$ |
+| Tejido blando viscoso | Amortiguador $R$ | Resistor $R$ |
+| Tendones y aponeurosis | Elemento elástico en serie $C_s$ | Capacitor $C_s$ |
+| Sarcolema y tejido adiposo | Elemento elástico en paralelo $C_p$ | Capacitor $C_p$ |
+| Unión músculo–hueso (tendón y hueso) | Fuerza transmitida $F(t)$ | Voltaje $V(t)$ |
+| Desplazamiento de la unión | $x(t)$, $x_1(t)$ | Carga $q(t)$ |
 
-> Asignaciones fisiológicas simplificadas, tal como las plantea la guía; confirmar con el diagrama final.
+> Asignaciones fisiológicas simplificadas, consistentes con el diagrama elaborado. El elemento de desplazamiento ($x(t)$, $x_1(t)$) se indica en el esquema mecánico del diagrama.
 
 [Volver al contenido](#contenido)
 
@@ -497,10 +610,8 @@ flowchart TD
     C --> D[Superposicion: F y F0]
     D --> E[Funcion de transferencia G]
     E --> F[Error, polo y estabilidad]
-    D --> G[Simulink: ecuaciones]
     E --> H[Simulink: funcion de transferencia]
     C --> I[Simscape Electrical: circuito]
-    G --> J[Respuesta al impulso en lazo abierto]
     H --> J
     I --> J
     E --> K[PID con retroalimentacion negativa]
@@ -523,32 +634,31 @@ flowchart TD
 
 ### Etapa 1. Modelado y análisis
 
-- [ ] Identificar los elementos y variables del modelo mecánico.
-- [ ] Construir el circuito equivalente con la analogía fuerza–voltaje.
-- [ ] Aplicar superposición y obtener $G(s)$ para control y caso.
-- [ ] Calcular el error en estado estacionario.
-- [ ] Calcular polo y cero, y analizar la estabilidad.
+- [x] Identificar los elementos y variables del modelo mecánico.
+- [x] Construir el circuito equivalente con la analogía fuerza–voltaje.
+- [x] Aplicar superposición y obtener $G(s)$ para control y caso.
+- [x] Calcular el error en estado estacionario.
+- [x] Calcular polo y cero, y analizar la estabilidad.
 - [ ] Elaborar el bosquejo previo de la respuesta.
 
 ### Etapa 2. Simulación en lazo abierto
 
-- [ ] Implementar el modelo por ecuaciones en Simulink.
-- [ ] Implementar la función de transferencia en Simulink.
-- [ ] Implementar el circuito en Simscape Electrical.
-- [ ] Obtener la respuesta al impulso en $t\in[0,10]\,\mathrm{s}$ y comparar control y caso.
+- [x] Implementar la función de transferencia en Simulink.
+- [x] Implementar el circuito en Simscape Electrical.
+- [x] Obtener la respuesta al impulso en $t\in[0,10]\,\mathrm{s}$ y comparar control y caso.
 
 ### Etapa 3. Control
 
-- [ ] Construir el sistema de la Figura 5.4 con el bloque PID en el caso.
-- [ ] Sintonizar $k_P$, $k_I$ y $k_D$ con *Tune* y guardar la evidencia.
-- [ ] Obtener la respuesta en lazo cerrado y analizarla.
+- [x] Construir el sistema de la Figura 5.4 con el bloque PID en el caso.
+- [x] Sintonizar $k_P$, $k_I$ y $k_D$ con *Tune* y guardar la evidencia.
+- [x] Obtener la respuesta en lazo cerrado y analizarla.
 
 ### Etapa 4. Verificación y documentación
 
-- [ ] Desarrollar el cuaderno de MATLAB con la función de graficación (figuras en PDF).
-- [ ] Implementar y ejecutar el código en Python.
-- [ ] Realizar la verificación cruzada de las cinco implementaciones.
-- [ ] Elaborar el diagrama biológico.
+- [x] Desarrollar el cuaderno de MATLAB con la función de graficación (figuras en PDF).
+- [x] Implementar y ejecutar el código en Python.
+- [x] Realizar la verificación cruzada de las implementaciones.
+- [x] Elaborar el diagrama biológico.
 - [ ] Publicar el repositorio con `README.md` y `CITATION.cff`.
 
 [Volver al contenido](#contenido)
@@ -558,29 +668,31 @@ flowchart TD
 <a id="estructura"></a>
 ## Estructura del repositorio
 
-Organización **sugerida** (los nombres de archivos del estudiante no están especificados en la guía):
+Archivos del repositorio (organización plana en la raíz):
 
 ```text
 .
 ├── README.md
-├── CITATION.cff
-├── Análisis_matemático_P3.pdf        # Análisis del modelo, analogía y función de transferencia
-├── Apellido_NoControl.mlx            # Cuaderno MATLAB
-├── Apellido_NoControl.pdf            # Exportación del cuaderno
-├── musculoesqueletico.slx            # Modelos Simulink
-├── musculoesqueletico_simscape.slx   # Circuito en Simscape Electrical
-├── musculoesqueletico.py             # Código Python
-├── figuras/
-│   ├── modelo_mecanico.png
-│   ├── circuito_equivalente.png
-│   ├── polos_ceros.png
-│   ├── tune_pid.png
-│   ├── diagrama_biologico.png
-│   ├── lazo_abierto_matlab.pdf
-│   ├── lazo_cerrado_matlab.pdf
-│   ├── lazo_abierto_python.pdf
-│   └── lazo_cerrado_python.pdf
-└── evidencias/                       # Capturas de las simulaciones
+├── CITATION.cff                                                   # pendiente
+├── Análisis_matemático_P3.pdf                                     # Análisis del modelo y función de transferencia
+├── Garcia23212195(P3).mlx                                         # Cuaderno MATLAB
+├── Garcia23212195(P3).pdf                                         # Exportación del cuaderno
+├── Garcia23212195(P3).py                                          # Código Python
+├── SistemaP3.slx                                                  # Modelo Simulink (FT, circuito Simscape y lazo cerrado)
+├── Señal_matlab.pdf                                               # Control, caso y tratamiento (MATLAB)
+├── Señal_Python.pdf                                               # Control, caso y tratamiento (Python)
+├── Diagrama de modelado y control del sistema musculoesquelético.png   # Diagrama biológico (BioRender)
+├── capturas/                                                      # Capturas de Simulink, scopes, bloque PI, Tune y pulso
+│   ├── Simulink_SistemaP3.png
+│   ├── Simulink_Sistema_Control.png
+│   ├── Simulink_Sistema_Caso.png
+│   ├── Scope_Control.png
+│   ├── Scope_Caso.png
+│   ├── PID_Controller_bloque.png
+│   ├── Tune_PI.png
+│   └── Pulse_Generator_F.png
+└── figuras/
+    └── polos_ceros.png                                            # Mapa de polos y ceros
 ```
 
 Si se usan otros nombres o carpetas, actualizar las rutas de este README.
@@ -596,7 +708,7 @@ Si se usan otros nombres o carpetas, actualizar las rutas de este README.
 - **Simscape Electrical** para el circuito equivalente.
 - Herramientas de sintonización PID de Simulink (*Tune*).
 - **Control System Toolbox** para `tf`, `pole` y `zero` (ejemplo ilustrativo).
-- **Python** y **Visual Studio Code**, con las bibliotecas importadas por el código.
+- **Python** y **Visual Studio Code**, con `python-control` (importada como `ctrl`) y las demás bibliotecas importadas por el código.
 - **Git y GitHub**.
 - BioRender o herramienta equivalente para el diagrama biológico.
 
