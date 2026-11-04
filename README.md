@@ -579,7 +579,8 @@ El error máximo con PI ocurre en los instantes de conmutación del pulso ($t=1\
 
 Diagrama elaborado en BioRender (o herramienta equivalente) que relaciona los elementos del modelo con las estructuras musculoesqueléticas. Debe identificar, como mínimo: elemento contráctil muscular, estructuras elásticas musculares, tendón, desplazamiento, fuerza generada y elementos de comportamiento viscoso y elástico.
 
-<img width="1206" height="844" alt="Diagrama de modelado y control del sistema musculoesquelético" src="https://github.com/user-attachments/assets/fb683480-59e5-4423-960e-a8bfeaac03a4"
+<img width="1206" height="844" alt="Diagrama de modelado y control del sistema musculoesquelético" src="https://github.com/user-attachments/assets/d26fd52f-41d5-46e5-ab45-118fae4a8810" />
+
 *Figura elaborada con BioRender. Relaciona el modelo mecánico (esquina superior izquierda) con las estructuras musculoesqueléticas que representa cada elemento.*
 
 | Estructura biológica | Elemento mecánico | Equivalente eléctrico |
