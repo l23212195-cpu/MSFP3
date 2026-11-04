@@ -10,7 +10,7 @@ Repositorio académico de la asignatura **Modelado de Sistemas Fisiológicos**, 
 **Institución:** Tecnológico Nacional de México / Instituto Tecnológico de Tijuana  
 **Asignatura:** Modelado de Sistemas Fisiológicos  
 **Programa:** Ingeniería Biomédica  
-**Estudiante:** Nombre completo · Número de control · correo@tijuana.tecnm.mx
+**Estudiante:** Garcia Grijalava Armando · 23212195 · L23212195@tijuana.tecnm.mx
 
 **Repositorio de la asignatura:** https://github.com/DrPaulValle/MSF-IBF1020  
 **Sede:** Blvd. Alberto Limón Padilla s/n, Tijuana, C. P. 22454, B. C., México.
