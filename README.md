@@ -1,4 +1,4 @@
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=USUARIO_GITHUB/MSFP3)
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=l23212195-cpu/MSFP3)
 
 # Práctica 5.5 — Modelado y control del sistema musculoesquelético
 
@@ -10,7 +10,7 @@ Repositorio académico de la asignatura **Modelado de Sistemas Fisiológicos**, 
 **Institución:** Tecnológico Nacional de México / Instituto Tecnológico de Tijuana  
 **Asignatura:** Modelado de Sistemas Fisiológicos  
 **Programa:** Ingeniería Biomédica  
-**Estudiante:** Nombre completo · 23212195 · correo@tijuana.tecnm.mx
+**Estudiante:** Garcia Grijalva Armando · 23212195 · L23212195@tijuana.tecnm.mx
 
 **Repositorio de la asignatura:** https://github.com/DrPaulValle/MSF-IBF1020  
 **Sede:** Blvd. Alberto Limón Padilla s/n, Tijuana, C. P. 22454, B. C., México.
