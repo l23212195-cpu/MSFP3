@@ -14,14 +14,13 @@ authors:
     family-names: Garcia Grijalva
     email: L23212195@tijuana.tecnm.mx
     affiliation: TecNM / IT Tijuana
-repository-code: 'https://github.com/l23212195-cpu/MSFP2'
+repository-code: 'https://github.com/l23212195-cpu/MSFP3'
 keywords:
-  - Modelo Windkessel
-  - Sistema cardiovascular
-  - Circuito RLC
-  - Controlador PID
-  - Modelo matemático
-  - Simulaciones numéricas
+  - Sistema musculoesquelético
+  - Analogía fuerza–voltaje
+  - Atrofia muscular
+  - Superposición
+  - Simulación in silico
 license: BSD-2-Clause
 version: '1.0'
-date-released: '2026-10-20'
+date-released: '2026-11-03'
